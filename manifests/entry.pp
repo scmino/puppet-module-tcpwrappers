@@ -79,7 +79,9 @@ define tcpwrappers::entry($ensure = present,
 
 			augeas {
 				"${key}/new":
-					changes => sum($create_cmds, $extra_create_cmds),
+					# Use stdlib, see https://github.com/anchor/puppet-module-tcpwrappers/issues/1
+					#changes => sum($create_cmds, $extra_create_cmds),
+					changes => flatten([$create_cmds, $extra_create_cmds]),
 					onlyif  => "match ${key_entry} size == 0";
 				$key:
 					changes => "set ${key_entry}/clients/client[.='${client_}'] '${client_}'",
