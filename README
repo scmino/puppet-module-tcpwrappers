@@ -37,6 +37,12 @@ tcpwrappers::deny
 
     # tcpwrappers::deny accepts the same parameters
 
+    # Example to block everything apart from ssh from two networks
+    tcpwrappers::deny  { deny: daemon =>  "ALL", client => "ALL" }
+    tcpwrappers::allow { allow1: daemon => "sshd", client => "10.1.2.0/24"; }
+    tcpwrappers::allow { allow2: daemon => "sshd", client => "172.17.16.0/24"; }
+
+
 Adds the specified entry to hosts.allow or hosts.deny respectively.
 The namevar is not significant.
 
